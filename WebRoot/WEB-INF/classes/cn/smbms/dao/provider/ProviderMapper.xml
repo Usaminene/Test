@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.smbms.dao.provider.ProviderMapper">
+	
+	<select id="getProCodeExist" resultType="Int">
+		select count(1) as count from smbms_provider where proCode = #{proCode}
+	</select>
+		
+	<select id="getProList" resultType="Provider">
+		select * from smbms_provider
+		<where>
+			<if test="proCode !=null "> and proCode like CONCAT("%",#{proCode},"%") </if>
+			<if test="proName !=null"> and proName like CONCAT("%",#{proName},"%") </if>
+		</where>
+		Limit #{currentPageNo},#{pageSize}
+	</select>
+
+	<select id="getProCount" resultType="Int">
+		select count(1) as count from smbms_provider
+		<where>
+			<if test="proCode !=null "> and proCode like CONCAT('%',#{proCode},'%') </if>
+			<if test="proName !=null"> and proName like CONCAT('%',#{proName},'%') </if>
+		</where>
+	</select>
+</mapper>
